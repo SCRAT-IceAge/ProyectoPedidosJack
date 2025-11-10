@@ -2,7 +2,7 @@
 import express from "express";
 import mysql from "mysql2/promise";
 
-class Registro {
+class SignUp {
   #nombre;
   #email;
 
@@ -65,15 +65,16 @@ class Registro {
 }
 
 // Clase derivada: Usuario
-class Usuario extends Registro {
+class Usuario extends SignUp {
   // Atributo privado adicional
   #id;
+  #contrasenia;
 
   constructor(id, nombre, email, contrasenia) {
     // Llamamos al constructor de la clase padre (Registro)
     super(nombre, email);
     this.#id = id;
-    this.contrasenia = contrasenia;
+    this.#contrasenia = contrasenia;
   }
 
   getId() {
