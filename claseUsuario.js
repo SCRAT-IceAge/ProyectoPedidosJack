@@ -1,4 +1,5 @@
 // Clase base: Registro
+import express from "express";
 import mysql from "mysql2/promise";
 
 class Registro {
@@ -68,18 +69,15 @@ class Usuario extends Registro {
   // Atributo privado adicional
   #id;
 
-  constructor(id, nombre, email) {
+  constructor(id, nombre, email, contrasenia) {
     // Llamamos al constructor de la clase padre (Registro)
     super(nombre, email);
     this.#id = id;
+    this.contrasenia = contrasenia;
   }
 
   getId() {
     return this.#id;
-  }
-
-  setId(id) {
-    this.#id = id;
   }
 
   // Sobrescribimos el método mostrarInfo para incluir el ID
@@ -93,3 +91,5 @@ const usuario1 = new Usuario(1, "Carlos Pérez", "carlos@example.com");
 
 console.log(usuario1.mostrarInfo()); // ID: 1, Nombre: Carlos Pérez, Email: carlos@example.com
 
+const port = 3060;
+app.listen(port, ()=> console.log('Servidor corriendo en http://localhost:3060'));
