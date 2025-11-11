@@ -1,0 +1,9 @@
+Así quedo el nav con el boton de inciar sesion:
+
+    <nav class="nav">
+      <a href="login.html">Inicia Sesión</a>
+      <a href="#">Inicio</a>
+      <a href="#">Productos</a>
+      <a href="#">Contacto</a>
+      <a href="#" class="cart"><i class="fa fa-shopping-cart"></i></a>
+    </nav>
