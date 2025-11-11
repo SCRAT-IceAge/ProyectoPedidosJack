@@ -2,45 +2,47 @@
 import express from "express";
 import mysql from "mysql2/promise";
 
-class SignUp {
-  #nombre;
-  #email;
+const app = express();
+app.use(express.json()); // para procesar JSON en requests
 
-  constructor(nombre, email) {
-    this.#nombre = nombre;
-    this.#email = email;
+class Usuario {
+  #contrasenia;
+
+  constructor(usuario, contrasenia) {
+    this.usuario = usuario;
+    this.#contrasenia = contrasenia;
   }
 
-  getNombre() { return this.#nombre; }
-  getEmail() { return this.#email; }
-  setNombre(nombre) { this.#nombre = nombre; }
-  setEmail(email) { this.#email = email; }
+  getUsuario() {return this.usuario; }
+  getContrasenia() {return this.#contrasenia; }
+  setUsuario(usuario) { this.usuario = usuario; }
+  setContrasenia(contrasenia) { this.#contrasenia = contrasenia; }
 
   mostrarInfo() {
-    return `Nombre: ${this.#nombre}, Email: ${this.#email}`;
+    return `Usuario: ${this.usuario}, Contrasenia: ${this.#contrasenia}`;
   }
 
-  // 🔍 Método para verificar si nombre o email existen en la base de datos
+  // 🔍 Método para verificar si USUARIO existe en BDD
   async verificarEnBD() {
     // 1️⃣ Conexión a la base de datos
     const conexion = await mysql.createConnection({
       host: "localhost",
-      user: "tu_usuario",
-      password: "tu_contraseña",
-      database: "tu_basedatos"
+      user: "root",
+      password: "JackElDestripador",
+      database: "pedidosjack"
     });
 
     try {
-      // 2️⃣ Verificar si el nombre existe
+      // 2️⃣ Verificar si el USUARIO existe
       const [rowsNombre] = await conexion.execute(
         "SELECT COUNT(*) AS total FROM usuarios WHERE nombre = ?",
-        [this.#nombre]
+        [this.usuario]
       );
 
       // 3️⃣ Verificar si el email existe
       const [rowsEmail] = await conexion.execute(
         "SELECT COUNT(*) AS total FROM usuarios WHERE email = ?",
-        [this.#email]
+        [this.#contrasenia]
       );
 
       // 4️⃣ Respuestas personalizadas
@@ -63,7 +65,7 @@ class SignUp {
     }
   }
 }
-
+/*
 // Clase derivada: Usuario
 class Usuario extends SignUp {
   // Atributo privado adicional
@@ -86,11 +88,10 @@ class Usuario extends SignUp {
     return `ID: ${this.#id}, ${super.mostrarInfo()}`;
   }
 }
-
+*/
 // Ejemplo de uso
-const usuario1 = new Usuario(1, "Carlos Pérez", "carlos@example.com");
 
-console.log(usuario1.mostrarInfo()); // ID: 1, Nombre: Carlos Pérez, Email: carlos@example.com
+//console.log(usuario1.mostrarInfo()); // ID: 1, Nombre: Carlos Pérez, Email: carlos@example.com
 
-const port = 3060;
-app.listen(port, ()=> console.log('Servidor corriendo en http://localhost:3060'));
+const port = 3306;
+app.listen(port, ()=> console.log('Servidor corriendo en http://localhost:3306'));
